@@ -4,7 +4,8 @@ import 'package:flutter_training/src/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LogoutDialog {
-  static void showLoadingDialog(BuildContext context, String msg) {
+  static void showLoadingDialog(BuildContext context, String msg) async {
+    SharedPreferences _preferences = await SharedPreferences.getInstance();
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -26,6 +27,8 @@ class LogoutDialog {
                                 Navigator.of(context).pop(HomePage());
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => LoginPage()));
+                                _preferences.setBool('HasLogin', false);
+                                _preferences.setString('token', null);
                               },
                               child: Text('Có'),
                             ),
